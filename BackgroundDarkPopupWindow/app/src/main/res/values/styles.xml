@@ -1,0 +1,13 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="MyDarkStyle">
+        <item name="android:windowEnterAnimation">@anim/my_dark_in</item>
+        <item name="android:windowExitAnimation">@anim/my_dark_out</item>
+    </style>
+
+</resources>
