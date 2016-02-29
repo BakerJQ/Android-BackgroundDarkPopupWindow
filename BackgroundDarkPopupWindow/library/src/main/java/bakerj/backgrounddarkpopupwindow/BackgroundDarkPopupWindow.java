@@ -51,7 +51,7 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
         p.height = WindowManager.LayoutParams.MATCH_PARENT;
         p.format = PixelFormat.TRANSLUCENT;
         p.flags = computeFlags(p.flags);
-        p.type = WindowManager.LayoutParams.TYPE_APPLICATION_PANEL;
+        p.type = WindowManager.LayoutParams.LAST_SUB_WINDOW;
         p.token = token;
         p.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED;
         return p;
