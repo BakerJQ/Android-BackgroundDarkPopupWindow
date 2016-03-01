@@ -11,6 +11,8 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 
+import java.lang.ref.WeakReference;
+
 /**
  * @author BakerJ
  */
@@ -23,6 +25,8 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
     private int mRightOf, mLeftOf, mBelow, mAbove;
     private int[] mLocationInWindowPosition = new int[2];
     private int mDarkStyle = -1;
+    private WeakReference<View> mRightOfPositionView, mLeftOfPositionView, mBelowPositionView,
+            mAbovePositionView, mFillPositionView;
 
     public BackgroundDarkPopupWindow(View contentView, int width, int height) {
         super(contentView, width, height);
@@ -41,6 +45,7 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
 
     /**
      * create dark layout
+     *
      * @param token
      * @return
      */
@@ -73,6 +78,7 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
 
     /**
      * get dark animation
+     *
      * @return
      */
     private int computeDarkAnimation() {
@@ -101,10 +107,82 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
         if (isShowing() || getContentView() == null) {
             return;
         }
+        checkPosition();
         if (mDarkView != null) {
             computeDarkLayout();
             mDarkLP.windowAnimations = computeDarkAnimation();
             mWindowManager.addView(mDarkView, mDarkLP);
+        }
+    }
+
+    /**
+     * check whether the position of dark is set
+     */
+    private void checkPosition() {
+        checkPositionLeft();
+        checkPositionRight();
+        checkPositionBelow();
+        checkPositionAbove();
+        checkPositionFill();
+    }
+
+    /**
+     * check whether the left-of-position of dark is set
+     */
+    private void checkPositionLeft() {
+        if (mLeftOfPositionView != null) {
+            View leftOfView = mLeftOfPositionView.get();
+            if (leftOfView != null && mLeftOf == 0) {
+                drakLeftOf(leftOfView);
+            }
+        }
+    }
+
+    /**
+     * check whether the right-of-position of dark is set
+     */
+    private void checkPositionRight() {
+        if (mRightOfPositionView != null) {
+            View rightOfView = mRightOfPositionView.get();
+            if (rightOfView != null && mRightOf == 0) {
+                darkRightOf(rightOfView);
+            }
+        }
+    }
+
+    /**
+     * check whether the below-position of dark is set
+     */
+    private void checkPositionBelow() {
+        if (mBelowPositionView != null) {
+            View belowView = mBelowPositionView.get();
+            if (belowView != null && mBelow == 0) {
+                darkBelow(belowView);
+            }
+        }
+    }
+
+    /**
+     * check whether the above-position of dark is set
+     */
+    private void checkPositionAbove() {
+        if (mAbovePositionView != null) {
+            View aboveView = mAbovePositionView.get();
+            if (aboveView != null && mAbove == 0) {
+                darkAbove(aboveView);
+            }
+        }
+    }
+
+    /**
+     * check whether the fill-position of dark is set
+     */
+    private void checkPositionFill() {
+        if (mFillPositionView != null) {
+            View fillView = mFillPositionView.get();
+            if (fillView != null && (mLeftOf == 0 || mAbove == 0)) {
+                drakFillView(fillView);
+            }
         }
     }
 
@@ -128,12 +206,34 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
 
     /**
      * set dark color
+     *
      * @param color
      */
     public void setDarkColor(int color) {
         if (mDarkView != null) {
             mDarkView.setBackgroundColor(color);
         }
+    }
+
+    public void resetDarkPosition() {
+        darkFillScreen();
+        if (mRightOfPositionView != null) {
+            mRightOfPositionView.clear();
+        }
+        if (mLeftOfPositionView != null) {
+            mLeftOfPositionView.clear();
+        }
+        if (mBelowPositionView != null) {
+            mBelowPositionView.clear();
+        }
+        if (mAbovePositionView != null) {
+            mAbovePositionView.clear();
+        }
+        if (mFillPositionView != null) {
+            mFillPositionView.clear();
+        }
+        mRightOfPositionView = mLeftOfPositionView = mBelowPositionView = mAbovePositionView =
+                mFillPositionView = null;
     }
 
     /**
@@ -147,43 +247,66 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
     }
 
     /**
+     * dark fill view
+     *
+     * @param view target view
+     */
+    public void drakFillView(View view) {
+        mFillPositionView = new WeakReference<>(view);
+        view.getLocationInWindow(mLocationInWindowPosition);
+        mRightOf = mLocationInWindowPosition[0];
+        mLeftOf = mLocationInWindowPosition[0] + view.getWidth();
+        mAbove = mLocationInWindowPosition[1] + view.getHeight();
+        mBelow = mLocationInWindowPosition[1];
+    }
+
+    /**
      * dark right of target view
+     *
      * @param view
      */
     public void darkRightOf(View view) {
+        mRightOfPositionView = new WeakReference<>(view);
         view.getLocationInWindow(mLocationInWindowPosition);
         mRightOf = mLocationInWindowPosition[0] + view.getWidth();
     }
 
     /**
      * dark left of target view
+     *
      * @param view
      */
     public void drakLeftOf(View view) {
+        mLeftOfPositionView = new WeakReference<>(view);
         view.getLocationInWindow(mLocationInWindowPosition);
         mLeftOf = mLocationInWindowPosition[0];
     }
 
     /**
      * dark above target view
+     *
      * @param view
      */
     public void darkAbove(View view) {
+        mAbovePositionView = new WeakReference<>(view);
         view.getLocationInWindow(mLocationInWindowPosition);
         mAbove = mLocationInWindowPosition[1];
     }
 
     /**
      * dark below target view
+     *
      * @param view
      */
     public void darkBelow(View view) {
+        mBelowPositionView = new WeakReference<>(view);
         view.getLocationInWindow(mLocationInWindowPosition);
         mBelow = mLocationInWindowPosition[1] + view.getHeight();
     }
 
     /**
      * get dark anim style
+     *
      * @return
      */
     public int getDarkStyle() {
@@ -192,6 +315,7 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
 
     /**
      * set dark anim style
+     *
      * @param darkStyle
      */
     public void setDarkStyle(int darkStyle) {

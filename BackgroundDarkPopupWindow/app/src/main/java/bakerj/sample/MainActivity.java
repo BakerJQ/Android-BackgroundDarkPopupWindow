@@ -75,7 +75,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 mTextView.setText("top");
                 mPopupWindow.setDarkStyle(-1);
                 mPopupWindow.setDarkColor(Color.parseColor("#a0000000"));
-                mPopupWindow.darkFillScreen();
+                mPopupWindow.resetDarkPosition();
                 mPopupWindow.darkBelow(mBtnTop);
                 mPopupWindow.showAsDropDown(mBtnTop, mBtnTop.getRight() / 2, 0);
                 break;
@@ -83,7 +83,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 mTextView.setText("left");
                 mPopupWindow.setDarkStyle(-1);
                 mPopupWindow.setDarkColor(Color.parseColor("#a0000000"));
-                mPopupWindow.darkFillScreen();
+                mPopupWindow.resetDarkPosition();
                 mPopupWindow.darkRightOf(mBtnLeft);
                 mPopupWindow.showAtLocation(mBtnLeft, Gravity.CENTER_VERTICAL | Gravity.LEFT, 0, 0);
                 break;
@@ -91,7 +91,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 mTextView.setText("right");
                 mPopupWindow.setDarkStyle(-1);
                 mPopupWindow.setDarkColor(Color.parseColor("#a0000088"));
-                mPopupWindow.darkFillScreen();
+                mPopupWindow.resetDarkPosition();
                 mPopupWindow.drakLeftOf(mBtnRight);
                 mPopupWindow.showAtLocation(mBtnRight, Gravity.CENTER_VERTICAL | Gravity.RIGHT, 0, 0);
                 break;
@@ -99,7 +99,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 mTextView.setText("bottom");
                 mPopupWindow.setDarkStyle(-1);
                 mPopupWindow.setDarkColor(Color.parseColor("#a0008800"));
-                mPopupWindow.darkFillScreen();
+                mPopupWindow.resetDarkPosition();
                 mPopupWindow.darkAbove(mBtnBottom);
                 mPopupWindow.showAtLocation(mBtnBottom, Gravity.CENTER_HORIZONTAL, 0, mBtnBottom.getTop());
                 break;
@@ -107,7 +107,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 mTextView.setText("center");
                 mPopupWindow.setDarkStyle(R.style.MyDarkStyle);
                 mPopupWindow.setDarkColor(Color.parseColor("#a0880000"));
-                mPopupWindow.darkFillScreen();
+                mPopupWindow.resetDarkPosition();
                 mPopupWindow.drakLeftOf(mBtnRight);
                 mPopupWindow.darkRightOf(mBtnLeft);
                 mPopupWindow.darkAbove(mBtnBottom);
@@ -118,6 +118,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 mTextView.setText("all");
                 mPopupWindow.setDarkStyle(-1);
                 mPopupWindow.setDarkColor(Color.parseColor("#a0000000"));
+                mPopupWindow.resetDarkPosition();
                 mPopupWindow.darkFillScreen();
                 mPopupWindow.showAtLocation(mBtnAll, Gravity.CENTER, 0, 0);
                 break;
