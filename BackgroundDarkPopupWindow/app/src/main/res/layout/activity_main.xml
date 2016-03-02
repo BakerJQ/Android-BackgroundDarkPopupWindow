@@ -8,6 +8,9 @@
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/right"
+        android:layout_toRightOf="@+id/left"
+        android:background="@drawable/btn_bg"
         android:text="top"/>
 
     <Button
@@ -15,6 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/right"
+        android:layout_toRightOf="@+id/left"
+        android:background="@drawable/btn_bg"
         android:text="bottom"/>
 
     <Button
@@ -23,6 +29,7 @@
         android:layout_height="match_parent"
         android:layout_above="@id/bottom"
         android:layout_below="@id/top"
+        android:background="@drawable/btn_bg"
         android:text="left"/>
 
     <Button
@@ -32,6 +39,7 @@
         android:layout_above="@id/bottom"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/top"
+        android:background="@drawable/btn_bg"
         android:text="right"/>
 
     <Button
@@ -41,6 +49,7 @@
         android:layout_below="@id/top"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
+        android:background="@drawable/btn_bg"
         android:text="center"/>
 
     <Button
@@ -49,6 +58,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/center"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_bg"
         android:text="all"/>
 
     <Button
@@ -61,6 +72,7 @@
         android:layout_margin="10dp"
         android:layout_toLeftOf="@id/right"
         android:layout_toRightOf="@id/left"
+        android:background="@drawable/btn_bg"
         android:text="view"/>
 
 </RelativeLayout>
