@@ -1,49 +1,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MainActivity">
 
     <Button
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="top" />
+        android:text="top"/>
 
     <Button
         android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="bottom" />
+        android:text="bottom"/>
 
     <Button
         android:id="@+id/left"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_below="@id/top"
         android:layout_above="@id/bottom"
-        android:text="left" />
+        android:layout_below="@id/top"
+        android:text="left"/>
 
     <Button
         android:id="@+id/right"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_below="@+id/top"
         android:layout_above="@id/bottom"
         android:layout_alignParentRight="true"
-        android:text="right" />
+        android:layout_below="@+id/top"
+        android:text="right"/>
 
     <Button
         android:id="@+id/center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="center" />
+        android:layout_below="@id/top"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="center"/>
 
     <Button
         android:id="@+id/all"
@@ -51,7 +49,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/center"
         android:layout_centerHorizontal="true"
-        android:text="all" />
+        android:text="all"/>
 
+    <Button
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom"
+        android:layout_below="@id/all"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:layout_toLeftOf="@id/right"
+        android:layout_toRightOf="@id/left"
+        android:text="view"/>
 
 </RelativeLayout>
