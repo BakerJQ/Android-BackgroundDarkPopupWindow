@@ -47,6 +47,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 WindowManager.LayoutParams.WRAP_CONTENT);
         mPopupWindow.setFocusable(true);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        mPopupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
     }
 
 
