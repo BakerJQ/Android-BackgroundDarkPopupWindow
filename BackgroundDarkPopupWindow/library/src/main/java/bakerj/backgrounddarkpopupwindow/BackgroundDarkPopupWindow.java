@@ -19,7 +19,6 @@ import java.lang.ref.WeakReference;
 public class BackgroundDarkPopupWindow extends PopupWindow {
 
     private View mDarkView;
-    private WindowManager.LayoutParams mDarkLP;
     private WindowManager mWindowManager;
     private int mScreenWidth, mScreenHeight;
     private int mRightOf, mLeftOf, mBelow, mAbove;
@@ -33,7 +32,6 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
         super(contentView, width, height);
         if (contentView != null) {
             mWindowManager = (WindowManager) contentView.getContext().getSystemService(Context.WINDOW_SERVICE);
-            mDarkLP = createDarkLayout(contentView.getWindowToken());
             mDarkView = new View(contentView.getContext());
             mDarkView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
             mDarkView.setBackgroundColor(Color.parseColor("#a0000000"));
@@ -64,14 +62,24 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
     }
 
     private int computeFlags(int curFlags) {
-        curFlags &= ~(
-                WindowManager.LayoutParams.FLAG_IGNORE_CHEEK_PRESSES |
-                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE |
-                        WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
-                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS |
-                        WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM |
-                        WindowManager.LayoutParams.FLAG_SPLIT_TOUCH);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            curFlags &= ~(
+                    WindowManager.LayoutParams.FLAG_IGNORE_CHEEK_PRESSES |
+                            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE |
+                            WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
+                            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS |
+                            WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM |
+                            WindowManager.LayoutParams.FLAG_SPLIT_TOUCH);
+        }else {
+            curFlags &= ~(
+                    WindowManager.LayoutParams.FLAG_IGNORE_CHEEK_PRESSES |
+                            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE |
+                            WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
+                            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS |
+                            WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }
         curFlags |= WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         curFlags |= WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
         return curFlags;
@@ -91,28 +99,29 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
 
     @Override
     public void showAsDropDown(View anchor, int xoff, int yoff) {
-        invokeBgCover();
+        invokeBgCover(anchor);
         super.showAsDropDown(anchor, xoff, yoff);
     }
 
     @Override
     public void showAtLocation(View parent, int gravity, int x, int y) {
-        invokeBgCover();
+        invokeBgCover(parent);
         super.showAtLocation(parent, gravity, x, y);
     }
 
     /**
      * show dark background
      */
-    private void invokeBgCover() {
+    private void invokeBgCover(View view) {
         if (mIsDarkInvoked || isShowing() || getContentView() == null) {
             return;
         }
         checkPosition();
         if (mDarkView != null) {
-            computeDarkLayout();
-            mDarkLP.windowAnimations = computeDarkAnimation();
-            mWindowManager.addView(mDarkView, mDarkLP);
+            WindowManager.LayoutParams darkLP = createDarkLayout(view.getWindowToken());
+            computeDarkLayout(darkLP);
+            darkLP.windowAnimations = computeDarkAnimation();
+            mWindowManager.addView(mDarkView, darkLP);
             mIsDarkInvoked = true;
         }
     }
@@ -191,11 +200,11 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
     /**
      * reset dark position
      */
-    private void computeDarkLayout() {
-        mDarkLP.x = mRightOf;
-        mDarkLP.y = mBelow;
-        mDarkLP.width = mLeftOf - mRightOf;
-        mDarkLP.height = mAbove - mBelow;
+    private void computeDarkLayout(WindowManager.LayoutParams darkLP) {
+        darkLP.x = mRightOf;
+        darkLP.y = mBelow;
+        darkLP.width = mLeftOf - mRightOf;
+        darkLP.height = mAbove - mBelow;
     }
 
     @Override
