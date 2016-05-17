@@ -27,7 +27,7 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
     private int mDarkStyle = -1;
     private WeakReference<View> mRightOfPositionView, mLeftOfPositionView, mBelowPositionView,
             mAbovePositionView, mFillPositionView;
-    private boolean isDarkInvoked = false;
+    private boolean mIsDarkInvoked = false;
 
     public BackgroundDarkPopupWindow(View contentView, int width, int height) {
         super(contentView, width, height);
@@ -105,7 +105,7 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
      * show dark background
      */
     private void invokeBgCover() {
-        if (isDarkInvoked || isShowing() || getContentView() == null) {
+        if (mIsDarkInvoked || isShowing() || getContentView() == null) {
             return;
         }
         checkPosition();
@@ -113,7 +113,7 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
             computeDarkLayout();
             mDarkLP.windowAnimations = computeDarkAnimation();
             mWindowManager.addView(mDarkView, mDarkLP);
-            isDarkInvoked = true;
+            mIsDarkInvoked = true;
         }
     }
 
@@ -201,9 +201,9 @@ public class BackgroundDarkPopupWindow extends PopupWindow {
     @Override
     public void dismiss() {
         super.dismiss();
-        if (mDarkView != null && isDarkInvoked) {
+        if (mDarkView != null && mIsDarkInvoked) {
             mWindowManager.removeViewImmediate(mDarkView);
-            isDarkInvoked = false;
+            mIsDarkInvoked = false;
         }
     }
 
