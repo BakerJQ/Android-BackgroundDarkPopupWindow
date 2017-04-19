@@ -23,5 +23,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile project(':backgrounddark-popupwindow')
+    compile 'com.bakerj:backgrounddark-popupwindow:1.0.0'
 }
